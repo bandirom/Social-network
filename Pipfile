@@ -15,6 +15,7 @@ gunicorn = "*"
 werkzeug = "*"
 pyopenssl = "*"
 psycopg2 = "*"
+djangorestframework-jwt = "*"
 
 [requires]
 python_version = "3.8"

@@ -5,5 +5,8 @@ psycopg2==2.8.4
 pyOpenSSL==19.1.0
 Werkzeug==1.0.1
 gunicorn==19.9.0
+djangorestframework
+djangorestframework-jwt
+django-filter
 
 
