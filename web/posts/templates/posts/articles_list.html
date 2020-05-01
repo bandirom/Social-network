@@ -1,13 +1,63 @@
 {% extends "layer.html" %}
-
+{% load static %}
 {% block head %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'posts/css/post_list.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-{% for instance in object_list %}
-     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.title }}</a></p>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            {% if articles %}
+            {% for article in articles %}
+            <div class="row">
+                <div class="col-md-12 post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4> <strong><a href='{{ article.get_absolute_url }}' class="post-title">{{ article.title }}</a></strong></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 post-header-line">
+                            <span class="glyphicon glyphicon-user"></span>by <a href="#">{{ article.author}}</a> |
+                            <span class="glyphicon glyphicon-calendar"></span>{{ article.timestamp }} |
+                            <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comment_set.count }} Comments</a> | <i class="icon-share"></i><a href="#">39 Shares</a> |
+                            <span class="glyphicon glyphicon-tags"></span>Tags : <a href="#">
+                            <span class="label label-info">Snipp</span></a> <a href="#">
+                            <span class="label label-info">Bootstrap</span></a> <a href="#">
+                            <span class="label label-info">UI</span></a> <a href="#">
+                            <span class="label label-info">growth</span></a>
+                        </div>
+                    </div>
+                    <div class="row post-content">
+                        <div class="col-md-3">
+                            <a href="#">
+                                <img src="http://4.bp.blogspot.com/-_lqoNpVXeU4/UkxQ7N-QW8I/AAAAAAAACTw/pni-TZyp17o/s1600/cool+share+button+effects+styles.png" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="col-md-9">
+                            <p>{{ article.content_short | safe}}</p>
+                            <p><a class="btn btn-read-more" href='{{ article.get_absolute_url }}'>Read more</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Articles not found</h3>
+                </div>
+             </div>
+            {% endif %}
+        </div>
+        {% if user.is_staff %}
+
+        {% endif%}
+    </div>
+</div>
+
+
 
 {% endblock %}

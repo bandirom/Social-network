@@ -8,5 +8,6 @@ gunicorn==19.9.0
 djangorestframework
 djangorestframework-jwt
 django-filter
+flake8
 
 

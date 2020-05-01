@@ -32,8 +32,6 @@ class ArticleModel(models.Model):
         return slugify(self.title)
 
     def get_absolute_url(self):
-        # return reverse("articles:article-detail", kwargs={"id": self.id})
-
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
 
     class Meta:
@@ -52,3 +50,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.author
+
+    def get_leave_comment_url(self):
+        return reverse("articles:article-detail", kwargs={"slug": self.slug})
+
+    class Meta:
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"

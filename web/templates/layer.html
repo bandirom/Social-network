@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/styles/site.css' %}" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="{% static 'app/scripts/jquery-3.4.1.min.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     {% block head %} {% endblock %}
 </head>
 <body>
@@ -26,6 +27,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'main:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{% url 'articles:article-list' %}"><i></i> Articles</a></li>
                 </ul>
                 {% include 'loginpartial.html' %}
             </div>
