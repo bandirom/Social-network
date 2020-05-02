@@ -2,9 +2,11 @@
 {% load static %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'posts/css/post_list.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'posts/css/pagination.css' %}" />
 {% endblock %}
 
 {% block content %}
+
 
 <div class="container">
     <div class="row">
@@ -32,9 +34,11 @@
                     </div>
                     <div class="row post-content">
                         <div class="col-md-3">
-                            <a href="#">
-                                <img src="http://4.bp.blogspot.com/-_lqoNpVXeU4/UkxQ7N-QW8I/AAAAAAAACTw/pni-TZyp17o/s1600/cool+share+button+effects+styles.png" alt="" class="img-responsive">
-                            </a>
+                            {% if article.image %}
+                            <img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive">
+                            {% else %}
+                            <img src="http://placehold.it/900x300" class="img-responsive">
+                            {% endif%}
                         </div>
                         <div class="col-md-9">
                             <p>{{ article.content_short | safe}}</p>
@@ -58,6 +62,6 @@
     </div>
 </div>
 
-
+{% include 'posts/pagination.html'%}
 
 {% endblock %}
