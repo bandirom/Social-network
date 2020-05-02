@@ -6,7 +6,7 @@ from .models import ArticleModel, Comment
 
 
 class ArticleListView(ListView):
-    # queryset = ArticleModel.objects.all()  # <p>/<modelname>_list.html
+    queryset = ArticleModel.objects.all()  # <p>/<modelname>_list.html
     template_name = 'posts/articles_list.html'
     model = ArticleModel
     paginate_by = 5

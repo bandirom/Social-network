@@ -1,10 +1,15 @@
 from django.conf import settings
 from django.db import models
-import datetime
-
+from datetime import datetime, timedelta
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
+
+
+def article_upload_path(instance, filename):
+    """file will be uploaded to MEDIA_ROOT / post_images / user_<id> / <year> / <month> / <day>_<filename>"""
+    now = datetime.now()
+    return f'post_images/user_{instance.author.id}_{instance.author.username}/{now.year}/Month-{now.month}/{now.day}_{filename}'
 
 
 class ArticleModel(models.Model):
@@ -14,12 +19,14 @@ class ArticleModel(models.Model):
     content_full = models.TextField('Post text', null=True, blank=True)
     timestamp = models.DateTimeField('Published date', auto_now_add=True)
     slug = models.SlugField(verbose_name='Url', unique=True, blank=True)
+    image = models.ImageField(verbose_name='Post image', upload_to=article_upload_path, blank=True,
+                              default='post_images/no-image-available.jpg')
 
     def __str__(self):
         return self.title
 
     def was_published_recently(self):
-        return self.timestamp >= (timezone.now() - datetime.timedelta(days=7))
+        return self.timestamp >= (timezone.now() - timedelta(days=7))
 
     def author_name(self):
         return str(self.author.username)

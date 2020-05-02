@@ -9,5 +9,6 @@ djangorestframework
 djangorestframework-jwt
 django-filter
 flake8
+Pillow
 
 
