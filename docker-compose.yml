@@ -4,13 +4,14 @@ services:
   web:
     build: ./web
     # command: gunicorn src.wsgi:application --bind 0.0.0.0:8000
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver_plus 0.0.0.0:8000 --cert-file cert.crt
     volumes:
       - ./web/:/usr/src/web/
     ports:
       - 8000:8000
     env_file:
       - ./.env.dev
+      - ./.env.accounts
     depends_on:
       - db
     restart: unless-stopped

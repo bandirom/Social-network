@@ -1,4 +1,7 @@
 migrations/
+.env.accounts
+*.crt
+*.key
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
