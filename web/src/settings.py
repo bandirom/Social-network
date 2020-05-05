@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'defender.middleware.FailedLoginMiddleware',
 ]
 
-ROOT_URLCONF = 'scr.urls'
+ROOT_URLCONF = 'src.urls'
 
 TEMPLATES = [
     {
@@ -66,7 +66,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scr.wsgi.application'
+WSGI_APPLICATION = 'src.wsgi.application'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

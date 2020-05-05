@@ -3,6 +3,7 @@ version: '3.7'
 services:
   web:
     build: ./web
+    # command: gunicorn src.wsgi:application --bind 0.0.0.0:8000
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./web/:/usr/src/web/
@@ -12,7 +13,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
-    restart: always
+    restart: unless-stopped
 
   db:
     image: postgres:12.0-alpine
