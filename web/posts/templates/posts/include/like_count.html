@@ -1,0 +1,6 @@
+{{ article.likes.count }}
+{% if article.likes.count == 1 %}
+    Like
+{% else %}
+    Likes
+{% endif %}
