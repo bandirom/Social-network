@@ -1,7 +1,15 @@
 {% extends 'layer.html' %}
 {% load static %}
 {% block title %} {{ article.title }} {% endblock%}
-<!-- https://bootsnipp.com/snippets/kMmOW -->
+
+{% block head %}
+<script src="https://kit.fontawesome.com/fe539a9d82.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block jquery %}
+    $.getScript('{% static 'posts/js/likes.js' %}');
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -20,6 +28,12 @@
                 <a href=""><span class="badge badge-info">CSS</span></a>
                 <a href=""><span class="badge badge-info">HTML</span></a>
             </p>
+            <p>
+                {% include 'posts/include/like_style.html'%}
+                <a class="like-btn" data-href="{{ article.get_api_like_url }}" href="{{ article.get_like_url }}">
+                    {% include 'posts/include/like_count.html'%}
+                </a>
+            </p>
             <hr>
             <img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive">
             <hr>
@@ -28,8 +42,7 @@
                 <p>  {{ article.content_full | safe}}</p>
             </div>
         </div>
-        {% include 'posts/leave_comment.html' %}
-
+        {% include 'posts/include/leave_comment.html' %}
     </div>
 </div>
 

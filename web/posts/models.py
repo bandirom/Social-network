@@ -9,7 +9,8 @@ from django.utils import timezone
 def article_upload_path(instance, filename):
     """file will be uploaded to MEDIA_ROOT / post_images / user_<id> / <year> / <month> / <day>_<filename>"""
     now = datetime.now()
-    return f'post_images/user_{instance.author.id}_{instance.author.username}/{now.year}/Month-{now.month}/{now.day}_{filename}'
+    return f'post_images/user_{instance.author.id}_{instance.author.username}/{now.year}' \
+           f'/Month-{now.month}/{now.day}_{filename}'
 
 
 class ArticleModel(models.Model):
@@ -21,6 +22,7 @@ class ArticleModel(models.Model):
     slug = models.SlugField(verbose_name='Url', unique=True, blank=True)
     image = models.ImageField(verbose_name='Post image', upload_to=article_upload_path, blank=True,
                               default='post_images/no-image-available.jpg')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
 
     def __str__(self):
         return self.title
@@ -41,9 +43,16 @@ class ArticleModel(models.Model):
     def get_absolute_url(self):
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
 
+    def get_like_url(self):
+        return reverse('articles:like-toggle', kwargs={"slug": self.slug})
+
+    def get_api_like_url(self):
+        return reverse('articles:like-api-toggle', kwargs={"slug": self.slug})
+
     class Meta:
         verbose_name = "Article"
         verbose_name_plural = "Articles"
+        ordering = ['-timestamp']
 
 
 class Comment(models.Model):

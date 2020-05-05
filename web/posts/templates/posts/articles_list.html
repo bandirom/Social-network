@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'posts/css/post_list.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'posts/css/pagination.css' %}" />
+<script src="https://kit.fontawesome.com/fe539a9d82.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,10 @@
                         <div class="col-md-12 post-header-line">
                             <span class="glyphicon glyphicon-user"></span>by <a href="#">{{ article.author}}</a> |
                             <span class="glyphicon glyphicon-calendar"></span>{{ article.timestamp }} |
-                            <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comment_set.count }} Comments</a> | <i class="icon-share"></i><a href="#">39 Shares</a> |
+                            <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comment_set.count }} Comments</a> |
+                            {% include 'posts/include/like_style.html'%}
+                            {% include 'posts/include/like_count.html'%}|
+                            <i class="icon-share"></i><a href="#">39 Shares</a> |
                             <span class="glyphicon glyphicon-tags"></span>Tags : <a href="#">
                             <span class="label label-info">Snipp</span></a> <a href="#">
                             <span class="label label-info">Bootstrap</span></a> <a href="#">
