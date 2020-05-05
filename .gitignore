@@ -2,7 +2,7 @@ migrations/
 .env.accounts
 *.crt
 *.key
-
+*.pyc
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
