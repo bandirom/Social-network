@@ -1,25 +1,23 @@
 <div class="col-lg-8">
-    <br/>
-    <hr>
-    <!-- the comment box -->
+    <br/><hr>
     <div class="well">
         <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-        <form role="form" action="{% url 'articles:leave_comment' article.slug %}" method="post">
-            {% csrf_token %}
+        <form role="form" action="{% url 'articles:leave_comment' article.slug %}" method='POST'>
             <div class="form-group">
-                <input class="form-control"  type="text" required placeholder="Your name" name="name" /><br />
-                <textarea type="text" class="form-control" required placeholder="Your comment" rows="3" name="text"></textarea>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
             </div>
             <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
-        </form><br/>
+        </form>
     </div><hr>
+
     <div class="well">
         {% if last_comments %}
-        {% for l in last_comments%}
-        <h3><i class="fa fa-comment"></i> {{l.author}}
-            <small>{{ l.comment_date }}</small>
+        {% for comment in last_comments %}
+        <h3><i class="fa fa-comment"></i> {{ comment.author }}
+            <small>{{ comment.comment_date }}</small>
         </h3>
-        <p>{{l.comment_text}}</p>
+        <p>{{ comment.comment_text }}</p>
         {% endfor %}
         {% else %}
         <p> Comments not found </p>
