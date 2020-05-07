@@ -23,7 +23,7 @@ class ArticleListView(ArticleMixin, ListView):
     # queryset = ArticleModel.objects.all()  # <p>/<modelname>_list.html
     template_name = 'posts/articles_list.html'
     context_object_name = 'articles'
-    paginate_by = 5
+    paginate_by = 1
     ordering = ['-timestamp']
 
 

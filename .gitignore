@@ -1,9 +1,11 @@
 migrations/
+mediafiles/
+web/static/
 .env.*
 *.crt
 *.key
 *.pyc
-mediafiles/
+
 *.ps1
 Procfile
 

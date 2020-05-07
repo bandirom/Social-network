@@ -10,8 +10,8 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-9">
+    <div class="row infinite-container">
+        <div class="col-md-9 infinite-item">
             {% if articles %}
             {% for article in articles %}
             <div class="row">
@@ -45,7 +45,7 @@
                             {% endif%}
                         </div>
                         <div class="col-md-9">
-                            <p>{{ article.content_short | safe}}</p>
+                            <p>{{ article.content_short | safe |truncatewords:20}}</p>
                             <p><a class="btn btn-read-more" href='{{ article.get_absolute_url }}'>Read more</a></p>
                         </div>
                     </div>
@@ -59,13 +59,40 @@
                 </div>
              </div>
             {% endif %}
+            {% include 'posts/include/pagination_v2.html' %}
         </div>
+
+
         {% if user.is_staff %}
 
         {% endif%}
     </div>
 </div>
 
-{% include 'posts/include/pagination.html'%}
 
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'posts/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'posts/js/infinite.min.js' %}"></script>
+    <script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        handler: function(direction) {
+
+    },
+    offset: 'bottom-in-view',
+
+    onBeforePageLoad: function () {
+    $('.spinner-border').show();
+    },
+    onAfterPageLoad: function () {
+    $('.spinner-border').hide();
+    }
+
+    });
+
+    </script>
 {% endblock %}
