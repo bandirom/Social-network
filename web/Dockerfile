@@ -25,9 +25,19 @@ RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/web/requirements.txt
 RUN pip install -r requirements.txt
 
-# EXPOSE 8000
+RUN flake8 --ignore=E501,F401 .
+
+#EXPOSE 8000
+#ENV PORT=8888
+
+ENV LANG C.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+
 # copy project
 COPY . /usr/src/web/
 
 # CMD python manage.py runserver 0.0.0.0:8000
 # CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD gunicorn src.wsgi:application --bind 0.0.0.0:$PORT
