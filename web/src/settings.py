@@ -1,10 +1,11 @@
 
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECRET_KEY = '22+sg%5+##a=^-$o58(1q9(^r@cjl-p0r3m^x9@-#i=1qcs2y2'
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', "social-bandirom.herokuapp.com"]
 
 DEBUG = int(os.environ.get("DEBUG", default=1))
 SITE_ID = int(os.environ.get("SITE_ID", default=1))
@@ -95,6 +96,12 @@ SOCIALACCOUNT_PROVIDERS = {
 
 }
 
+# """
+# Heroku database settings.
+# """
+#
+# import dj_database_url
+
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
@@ -105,6 +112,10 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
+# DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

@@ -23,6 +23,7 @@ class ArticleModel(models.Model):
     image = models.ImageField(verbose_name='Post image', upload_to=article_upload_path, blank=True,
                               default='post_images/no-image-available.jpg')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
+    is_published = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -34,7 +35,10 @@ class ArticleModel(models.Model):
         return str(self.author.username)
 
     def save(self, *args, **kwargs):
+        print("Request")
+        # print("Request", self., "End")
         self.slug = slugify(self.title)
+        # self.author =
         super(ArticleModel, self).save(*args, **kwargs)
 
     def slug_title(self):

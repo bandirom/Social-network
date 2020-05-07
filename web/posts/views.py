@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, RedirectView, CreateView, DeleteView
@@ -58,7 +59,18 @@ class ArticleCreateView(ArticleMixin, CreateView):
     #     print('get')
     #     super().get(request, *args, **kwargs)
 
+    def post(self, request):
+        form = ArticleCreateForm(request.POST)
+        print('POST method', request.POST)
+
+        if form.is_valid():
+            article = form.save()
+            article.save()
+            return HttpResponseRedirect(reverse('articles:article-detail', args=[article.slug]))
+        return render(request, 'posts/create-update.html', {'form': form})
+
     def form_valid(self, form):
+        print('form_valid')
         print(form.cleaned_data)
         return super().form_valid(form)
 

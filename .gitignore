@@ -1,10 +1,11 @@
 migrations/
-.env.accounts
+.env.*
 *.crt
 *.key
 *.pyc
 mediafiles/
-
+*.ps1
+Procfile
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

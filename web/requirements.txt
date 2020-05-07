@@ -11,7 +11,7 @@ django-filter
 django-defender
 flake8
 Pillow
-
+dj-database-url
 
 
 

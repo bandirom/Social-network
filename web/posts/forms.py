@@ -2,6 +2,11 @@ from django import forms
 from .models import ArticleModel
 
 
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()
+
+
 class ArticleCreateForm(forms.ModelForm):
     title = forms.CharField(label='Title',
                             widget=forms.TextInput(attrs={"placeholder": "Your title"}))
@@ -11,7 +16,7 @@ class ArticleCreateForm(forms.ModelForm):
             attrs={
                 "placeholder": "Your description",
                 "class": "new-class-name two",
-                "id": "my-id-for-textarea",
+                "id": "short",
                 "rows": 20,
                 'cols': 120
             }
@@ -23,23 +28,28 @@ class ArticleCreateForm(forms.ModelForm):
             attrs={
                 "placeholder": "Your description",
                 "class": "new-class-name two",
-                "id": "my-id-for-textarea",
+                "id": "full",
                 "rows": 20,
                 'cols': 120
             }
         )
     )
 
-    #    image = forms.ImageField()
+    image = forms.ImageField(label='Image', required=False, widget=forms.FileInput(
+        attrs={
+            # "class": "myButton"
+        }))
 
     class Meta:
         model = ArticleModel
         fields = [
+            'author',
             'title',
             'content_short',
             'content_full'
-            # 'image',
         ]
+        # exclude = ('author',)
+        # widgets = {'author': forms.HiddenInput()}
 
 
 class CommentForm(forms.Form):

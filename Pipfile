@@ -16,6 +16,7 @@ werkzeug = "*"
 pyopenssl = "*"
 psycopg2 = "*"
 djangorestframework-jwt = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.8"
