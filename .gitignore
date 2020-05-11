@@ -5,7 +5,6 @@ web/static/
 *.crt
 *.key
 *.pyc
-
 *.ps1
 Procfile
 

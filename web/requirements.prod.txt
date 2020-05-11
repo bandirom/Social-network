@@ -2,15 +2,10 @@ Django==3.0.4
 django-allauth==0.41.0
 django-extensions==2.2.9
 psycopg2==2.8.4
-pyOpenSSL==19.1.0
-Werkzeug==1.0.1
 gunicorn==19.9.0
 djangorestframework
 djangorestframework-jwt
 django-filter
-django-defender
 flake8
 Pillow
-
-
 

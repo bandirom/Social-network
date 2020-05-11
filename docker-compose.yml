@@ -5,6 +5,7 @@ services:
     build: ./web
     # command: gunicorn src.wsgi:application --bind 0.0.0.0:8000
     command: python manage.py runserver_plus 0.0.0.0:8000 --cert-file cert.crt
+#    command: python manage.py migrate
     volumes:
       - ./web/:/usr/src/web/
     ports:

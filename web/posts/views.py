@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, RedirectView, CreateView, DeleteView
-from .models import ArticleModel, Comment
+from .models import ArticleModel
 from .forms import ArticleCreateForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -48,6 +48,7 @@ class ArticleDetailView(ArticleMixin, DetailView):
 
 
 class ArticleCreateView(ArticleMixin, CreateView):
+
     template_name = 'posts/create_update.html'
     form_class = ArticleCreateForm
 
@@ -103,7 +104,7 @@ class ArticleLikeAPIToggle(APIView):
 
     def get(self, request, slug=None, format=None):
         obj = get_object_or_404(ArticleModel, slug=slug)
-        url = obj.get_absolute_url()
+        # url = obj.get_absolute_url()
         user = self.request.user
         updated = False
         liked = False

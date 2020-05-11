@@ -4,14 +4,12 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECRET_KEY = '22+sg%5+##a=^-$o58(1q9(^r@cjl-p0r3m^x9@-#i=1qcs2y2'
-ALLOWED_HOSTS = ['*', "social-bandirom.herokuapp.com"]
-
 DEBUG = int(os.environ.get("DEBUG", default=1))
 SITE_ID = int(os.environ.get("SITE_ID", default=1))
 LOGIN_REDIRECT_URL = '/'
 
-# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1'),]
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
@@ -27,16 +25,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    'defender',
+    # 'defender',
 
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -46,7 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'defender.middleware.FailedLoginMiddleware',
+    # 'defender.middleware.FailedLoginMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -155,3 +152,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = "/mediafiles/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+
+# AUTH_USER_MODEL = 'app.UserProfile'
