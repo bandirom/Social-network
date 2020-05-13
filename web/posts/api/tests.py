@@ -10,9 +10,9 @@ class BlogAPITestCase(APITestCase):
         user = User.objects.create(username='testuser', email='test@test.com')
         user.set_password("randompassword")
         user.save()
-        article = ArticleModel.objects.create(author=user,
-                                              title='new title',
-                                              content_full='full')
+        ArticleModel.objects.create(author=user,
+                                    title='new title',
+                                    content_full='full')
 
     def test_single_user(self):
         user_count = User.objects.count()

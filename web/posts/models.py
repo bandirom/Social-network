@@ -15,6 +15,7 @@ def article_upload_path(instance, filename):
 
 
 class ArticleModel(models.Model):
+    """Model db for posts"""
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField('Title', max_length=120, null=False, blank=True)
     content_short = models.TextField('Short description', null=True, blank=True)
@@ -61,6 +62,7 @@ class ArticleModel(models.Model):
     @property
     def owner(self):
         return self.author.username
+
 
 class Comment(models.Model):
     article = models.ForeignKey(ArticleModel, on_delete=models.CASCADE)
