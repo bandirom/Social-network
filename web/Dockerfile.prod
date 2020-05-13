@@ -67,18 +67,21 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
 # copy entrypoint-prod.sh
-COPY ./entrypoint.prod.sh $APP_HOME
-RUN chmod +x entrypoint.prod.sh
+COPY ./docker_entrypoint.prod.sh $APP_HOME
+RUN chmod +x docker_entrypoint.prod.sh
 
 # copy project
 COPY . $APP_HOME
 
 # chown all the files to the www user
 RUN chown -R www:www $APP_HOME
-RUN chown www $APP_HOME/media
+# RUN chown www:www $APP_HOME/media
+# RUN chown www:www $APP_HOME/posts/migrations
+
+CMD python manage.py makemigrations && python manage.py migrate
+
 # change to the www user
 USER www
 
-
 # run entrypoint.prod.sh  chmod +x entrypoint.prod.sh
-ENTRYPOINT ["/home/www/web/entrypoint.prod.sh"]
+# ENTRYPOINT ["/home/www/web/docker_entrypoint.prod.sh"]
