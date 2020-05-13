@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile.prod
     command: gunicorn src.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./web/:/home/app/web
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/mediafiles
+      - ./web/:/home/www/web/
+      - static_volume:/home/www/web/static
+      - media_volume:/home/www/web/media
     expose:
       - 8000
     env_file:
@@ -27,12 +27,14 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/static
+      - static_volume:/home/www/web/static
+      - media_volume:/home/www/web/media
     ports:
       - 80:80
     depends_on:
       - web
     restart: unless-stopped
+
 
 volumes:
   postgres_data:

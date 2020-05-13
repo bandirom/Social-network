@@ -2,6 +2,7 @@ migrations/
 mediafiles/
 web/static/
 
+.env.accounts
 *.crt
 *.key
 *.pyc

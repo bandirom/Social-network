@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
+# from django.contrib.auth.models import User
 
 
 def article_upload_path(instance, filename):
@@ -35,14 +36,13 @@ class ArticleModel(models.Model):
         return str(self.author.username)
 
     def save(self, *args, **kwargs):
-        print("Request")
         # print("Request", self., "End")
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title, allow_unicode=True)
         # self.author =
         super(ArticleModel, self).save(*args, **kwargs)
 
     def slug_title(self):
-        return slugify(self.title)
+        return slugify(self.title, allow_unicode=True)
 
     def get_absolute_url(self):
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
@@ -58,6 +58,9 @@ class ArticleModel(models.Model):
         verbose_name_plural = "Articles"
         ordering = ['-timestamp']
 
+    @property
+    def owner(self):
+        return self.author.username
 
 class Comment(models.Model):
     article = models.ForeignKey(ArticleModel, on_delete=models.CASCADE)

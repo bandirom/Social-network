@@ -1,15 +1,11 @@
-
 import os
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 DEBUG = int(os.environ.get("DEBUG", default=1))
 SITE_ID = int(os.environ.get("SITE_ID", default=1))
 LOGIN_REDIRECT_URL = '/'
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1'),]
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
@@ -25,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_extensions',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -67,13 +63,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'src.wsgi.application'
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
-
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -90,13 +88,11 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': os.environ.get("FB_key")
         }
     }
-
 }
 
 # """
 # Heroku database settings.
 # """
-#
 # import dj_database_url
 
 DATABASES = {
@@ -113,9 +109,6 @@ DATABASES = {
 # db_from_env = dj_database_url.config()
 # DATABASES['default'].update(db_from_env)
 # DATABASES['default']['CONN_MAX_AGE'] = 500
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -150,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = "/mediafiles/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # AUTH_USER_MODEL = 'app.UserProfile'

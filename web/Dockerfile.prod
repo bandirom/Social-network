@@ -43,16 +43,17 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/web/wheels -r requir
 FROM python:3.8.2-alpine
 
 # create directory for the app user
-RUN mkdir -p /home/app
+RUN mkdir -p /home/www
 
 # create the app user
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup -S www && adduser -S www -G www
 
 # create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
+ENV HOME=/home/www
+ENV APP_HOME=/home/www/web
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/static
+RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # install dependencies
@@ -72,12 +73,12 @@ RUN pip install --no-cache /wheels/*
 # copy project
 COPY . $APP_HOME
 
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
-
-# change to the app user
-USER app
+# chown all the files to the www user
+RUN chown -R www:www $APP_HOME
+RUN chown www $APP_HOME/media
+# change to the www user
+USER www
 
 
 # run entrypoint.prod.sh  chmod +x entrypoint.prod.sh
-# ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
+# ENTRYPOINT ["/home/www/web/entrypoint.prod.sh"]
