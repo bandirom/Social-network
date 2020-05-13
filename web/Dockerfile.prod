@@ -67,8 +67,8 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
 # copy entrypoint-prod.sh
-# COPY ./entrypoint.prod.sh $APP_HOME
-# RUN chmod +x entrypoint.prod.sh
+COPY ./entrypoint.prod.sh $APP_HOME
+RUN chmod +x entrypoint.prod.sh
 
 # copy project
 COPY . $APP_HOME
@@ -81,4 +81,4 @@ USER www
 
 
 # run entrypoint.prod.sh  chmod +x entrypoint.prod.sh
-# ENTRYPOINT ["/home/www/web/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/www/web/entrypoint.prod.sh"]

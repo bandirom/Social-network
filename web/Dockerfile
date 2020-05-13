@@ -33,10 +33,14 @@ RUN flake8 --ignore=E501,F401 .
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
-
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/web/entrypoint.sh
 
 # copy project
 COPY . /usr/src/web/
+
+# run entrypoint.sh
+# ENTRYPOINT ["/usr/src/web/entrypoint.sh"]
 
 # CMD python manage.py runserver 0.0.0.0:8000
 # CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
