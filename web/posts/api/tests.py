@@ -21,3 +21,4 @@ class BlogAPITestCase(APITestCase):
     def test_single_post(self):
         post_count = ArticleModel.objects.count()
         self.assertEqual(post_count, 1)
+

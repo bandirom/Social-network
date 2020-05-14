@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
 # from django.contrib.auth.models import User
+from  rest_framework.reverse import reverse as api_reverse
 
 
 def article_upload_path(instance, filename):
@@ -53,6 +54,9 @@ class ArticleModel(models.Model):
 
     def get_api_like_url(self):
         return reverse('articles:like-api-toggle', kwargs={"slug": self.slug})
+
+    def get_api_url(self):
+        return api_reverse('articles-api:api-rud', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = "Article"

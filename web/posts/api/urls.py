@@ -1,6 +1,7 @@
-from .views import PostRUDView, PostListCreateView, PostAPIView
+from .views import PostRUDView, PostAPIView
 from django.urls import path
 
+app_name = 'articles-api'
 
 urlpatterns = [
     path('', PostAPIView.as_view(), name='api-create'),

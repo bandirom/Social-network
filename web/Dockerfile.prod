@@ -78,10 +78,8 @@ RUN chown -R www:www $APP_HOME
 # RUN chown www:www $APP_HOME/media
 # RUN chown www:www $APP_HOME/posts/migrations
 
-CMD python manage.py makemigrations && python manage.py migrate
-
 # change to the www user
-USER www
+# USER www
 
 # run entrypoint.prod.sh  chmod +x entrypoint.prod.sh
 # ENTRYPOINT ["/home/www/web/docker_entrypoint.prod.sh"]

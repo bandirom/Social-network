@@ -1,5 +1,5 @@
 migrations/
-mediafiles/
+media/
 web/static/
 
 .env.accounts
