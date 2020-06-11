@@ -27,11 +27,13 @@ RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-de
 # lint
 RUN pip install --upgrade pip
 RUN pip install flake8
-COPY . /usr/src/web/
-RUN flake8 --ignore=E501,F401 .
+
+COPY ./web /usr/src/web/
+
+RUN flake8 --ignore=E501,F401,F403 .
 
 # install dependencies
-COPY ./requirements.prod.txt .
+COPY ./web/requirements.prod.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/web/wheels -r requirements.prod.txt
 
 
@@ -66,9 +68,9 @@ COPY --from=builder /usr/src/web/requirements.prod.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
-# copy entrypoint-prod.sh
-COPY ./docker_entrypoint.prod.sh $APP_HOME
-RUN chmod +x docker_entrypoint.prod.sh
+# copy entrypoint.sh
+COPY ./docker/prod/web/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # copy project
 COPY . $APP_HOME
@@ -79,7 +81,7 @@ RUN chown -R www:www $APP_HOME
 # RUN chown www:www $APP_HOME/posts/migrations
 
 # change to the www user
-# USER www
+USER www
 
-# run entrypoint.prod.sh  chmod +x entrypoint.prod.sh
-# ENTRYPOINT ["/home/www/web/docker_entrypoint.prod.sh"]
+# run entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

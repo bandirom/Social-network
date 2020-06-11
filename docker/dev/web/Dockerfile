@@ -1,16 +1,19 @@
 # pull official base image
 FROM python:3.8.2-alpine
+MAINTAINER bandirom@localhost
 
+ENV HOME /usr/src/web
 # set work directory
-WORKDIR /usr/src/web
+WORKDIR $HOME
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV TZ Europe/Kyiv
-ENV DEBUG 1
 ENV SECRET_KEY  '22+sg%5+##a=^-$o58(1q9(^r@cjl-p0r3m^x9@-#i=1qcs2y2'
 ENV DJANGO_ALLOWED_HOSTS localhost 127.0.0.1 [::1]
+ENV LANG C.UTF-8
+ENV DEBIAN_FRONTEND noninteractive
 
 # install dependencies
 RUN apk update \
@@ -19,29 +22,18 @@ RUN apk update \
 # install Pillow dependencies
 RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev
 
-
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/web/requirements.txt
+COPY ./web/requirements.txt  ./requirements.txt
 RUN pip install -r requirements.txt
 
-RUN flake8 --ignore=E501,F401 .
-
-#EXPOSE 8000
-#ENV PORT=8888
-
-ENV LANG C.UTF-8
-ENV DEBIAN_FRONTEND=noninteractive
+RUN flake8 --ignore=E501,F401,F403 .
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /usr/src/web/entrypoint.sh
-
+COPY ./docker/dev/web/entrypoint.sh /entrypoint.sh
 # copy project
-COPY . /usr/src/web/
+COPY ./web /usr/src/web/
 
 # run entrypoint.sh
-# ENTRYPOINT ["/usr/src/web/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
-# CMD python manage.py runserver 0.0.0.0:8000
-# CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
-# CMD gunicorn src.wsgi:application --bind 0.0.0.0:$PORT
