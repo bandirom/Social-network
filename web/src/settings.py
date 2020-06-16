@@ -1,18 +1,19 @@
 import os
 from .allauth_settings import *
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = int(os.environ.get("DEBUG", default=1))
 SITE_ID = int(os.environ.get("SITE_ID", default=1))
-
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 INSTALLED_APPS = [
-    'app',
-    'posts',
+    'app.apps.AppConfig',
+    'posts.apps.PostsConfig',
+    'likes.apps.LikesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -20,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django_extensions',
     'rest_framework',
     # 'rest_framework.authtoken',
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     # 'defender',
+
 
 ]
 
@@ -68,33 +71,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': os.environ.get("Google_client_id"),
-            'secret': os.environ.get("Google_secret"),
-            'key': os.environ.get("Google_key")
-        }
-    },
-    'facebook': {
-        'APP': {
-            'client_id': os.environ.get("FB_client_id"),
-            'secret': os.environ.get("FB_secret"),
-            'key': os.environ.get("FB_key")
-        }
-    }
-}
-
-# """
-# Heroku database settings.
-# """
-# import dj_database_url
 
 DATABASES = {
     "default": {
@@ -106,10 +89,6 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-# DATABASE_URL = os.environ.get('DATABASE_URL')
-# db_from_env = dj_database_url.config()
-# DATABASES['default'].update(db_from_env)
-# DATABASES['default']['CONN_MAX_AGE'] = 500
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -146,5 +125,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# AUTH_USER_MODEL = 'app.UserProfile'

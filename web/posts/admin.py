@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.forms.utils import flatatt
 from django.urls import reverse
 from django.utils.html import format_html
-from .models import ArticleModel, Comment
+from .models import ArticleModel, Comment, Section
 
-# admin.site.register(ArticleModel)
 admin.site.register(Comment)
+admin.site.register(Section)
 
 
 @admin.register(ArticleModel)

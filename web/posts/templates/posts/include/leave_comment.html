@@ -2,7 +2,7 @@
     <br/><hr>
     <div class="well">
         <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-        <form role="form" action="{% url 'articles:leave_comment' article.slug %}" method='POST'>
+        <form role="form" action="{% url 'articles:leave_comment' article.section article.slug %}" method='POST'>
             <div class="form-group">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
