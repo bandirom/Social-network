@@ -4,6 +4,7 @@
 
 {% block head %}
 <script src="https://kit.fontawesome.com/fe539a9d82.js" crossorigin="anonymous"></script>
+<script src="{% static 'likes/js/likes.js' %}"></script>
 {% endblock %}
 
 {% block jquery %}
@@ -16,12 +17,11 @@
     <div class="row">
         <div class="col-lg-8">
             <h1><a href="">{{ article.title }}</a></h1>
-            <p class="lead"><i class="fa fa-user"></i> by <a href="">{{ article.author}}</a></p>
+            <p class="lead"><i class="fa fa-user"></i> by <a href="{% url 'main:user-profile' article.author %}">{{ article.author}}</a></p>
             <hr>
-            <p><i class="fa fa-calendar"></i> Posted on {{ article.timestamp }}</p>
-            {% if article.was_published_recently %}
-                <p class="lead">NEW ARTICLE</p>
-            {% endif%}
+            <p><i class="fa fa-calendar"></i> Posted on {{ article.timestamp }}
+                {% if article.was_published_recently %}   - <span class="label info">NEW ARTICLE</span> {% endif%}
+            </p>
             <p><i class="fa fa-tags"></i> Tags:
                 <a href=""><span class="badge badge-info">Bootstrap</span></a>
                 <a href=""><span class="badge badge-info">Web</span></a>
@@ -34,10 +34,17 @@
                     {% include 'posts/include/like_count.html'%}
                 </a>
             </p>
-            <hr>
-            <img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive">
-            <hr>
-            <p class="lead">Welcome to Bootstrap Blog Template! This is a blog template example, built with Bootstrap. Contains "tools" that would be needed in a post.</p>
+            <ul>
+                <li data-slug="{{ article.slug }}" data-href="{{ article.get_like }}" data-type="article"  data-csrf="{{ csrf_token }}" data-action="like" title="Нравится">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span data-count="like">{{ article.votes.likes.count }}</span>
+                </li>
+                <li data-slug="{{ article.slug }}" data-type="article"  data-csrf="{{ csrf_token }}" data-href="{{ article.get_dislike }}" data-action="dislike" title="Не нравится">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                    <span data-count="dislike">{{ article.votes.dislikes.count }}</span>
+                </li>
+            </ul>
+            <hr><img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive"><hr>
             <div class="post__description post__item">
                 <p>  {{ article.content_full | safe}}</p>
             </div>
@@ -45,6 +52,18 @@
         {% include 'posts/include/leave_comment.html' %}
     </div>
 </div>
+{% endblock %}
 
 
+{% block comment %}
+<ul>
+    <li data-slug="{{ article.slug }}" data-href="{{ article.get_like }}" data-type="article"  data-csrf="{{ csrf_token }}" data-action="like" title="Нравится">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        <span data-count="like">{{ article.votes.likes.count }}</span>
+    </li>
+    <li data-slug="{{ article.slug }}" data-type="article"  data-csrf="{{ csrf_token }}" data-href="{{ article.get_dislike }}" data-action="dislike" title="Не нравится">
+        <span class="glyphicon glyphicon-thumbs-down"></span>
+        <span data-count="dislike">{{ article.votes.dislikes.count }}</span>
+    </li>
+</ul>
 {% endblock %}

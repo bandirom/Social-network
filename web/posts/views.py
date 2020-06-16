@@ -1,13 +1,26 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView, DetailView, RedirectView, CreateView, DeleteView
-from .models import ArticleModel
+from .models import ArticleModel, Section
 from .forms import ArticleCreateForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from .forms import CommentForm
+
+
+class SectionView(View):
+    template_name = 'posts/articles_list.html'
+
+    def get(self, request, *args, **kwargs):
+        data: dict = {}
+        section = get_object_or_404(Section, url=self.kwargs['section'])
+        data['section'] = section
+        data['articles'] = ArticleModel.objects.filter(section=section).order_by('-timestamp')
+        data['section_list'] = Section.objects.all().order_by('title')
+        return render(request, template_name=self.template_name, context=data)
 
 
 class ArticleMixin(object):
@@ -25,6 +38,11 @@ class ArticleListView(ArticleMixin, ListView):
     context_object_name = 'articles'
     paginate_by = 4
     ordering = ['-timestamp']
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['section_list'] = Section.objects.all().order_by('title')
+        return data
 
 
 class ArticleDeleteView(ArticleMixin, DeleteView):
@@ -102,7 +120,7 @@ class ArticleLikeAPIToggle(APIView):
     authentication_classes = [authentication.SessionAuthentication, ]
     permission_classes = [permissions.IsAuthenticated, ]
 
-    def get(self, request, slug=None, format=None):
+    def get(self, request, slug=None, section=None, format=None):
         obj = get_object_or_404(ArticleModel, slug=slug)
         # url = obj.get_absolute_url()
         user = self.request.user
@@ -125,3 +143,5 @@ class ArticleLikeAPIToggle(APIView):
             'likecount': like_count,
         }
         return Response(data)
+
+

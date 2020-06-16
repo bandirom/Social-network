@@ -4,61 +4,31 @@
 <link rel="stylesheet" type="text/css" href="{% static 'posts/css/post_list.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'posts/css/pagination.css' %}" />
 <script src="https://kit.fontawesome.com/fe539a9d82.js" crossorigin="anonymous"></script>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
 {% endblock %}
 
 {% block content %}
+<article>
+
+
+    <article>
+    <h1>Разделы</h1>
+    {% if section_list %}
+        <ul>
+        {% for section in section_list %}
+            <li><a href="{{ section.get_absolute_url }}">{{ section.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </article>
 
 
 <div class="container">
     <div class="row infinite-container">
         <div class="col-md-9 infinite-item">
-            {% if articles %}
-            {% for article in articles %}
-            <div class="row">
-                <div class="col-md-12 post">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4> <strong><a href='{{ article.get_absolute_url }}' class="post-title">{{ article.title }}</a></strong></h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 post-header-line">
-                            <span class="glyphicon glyphicon-user"></span>by <a href="#">{{ article.author}}</a> |
-                            <span class="glyphicon glyphicon-calendar"></span>{{ article.timestamp }} |
-                            <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comment_set.count }} Comments</a> |
-                            {% include 'posts/include/like_style.html'%}
-                            {% include 'posts/include/like_count.html'%}|
-                            <i class="icon-share"></i><a href="#">39 Shares</a> |
-                            <span class="glyphicon glyphicon-tags"></span>Tags : <a href="#">
-                            <span class="label label-info">Snipp</span></a> <a href="#">
-                            <span class="label label-info">Bootstrap</span></a> <a href="#">
-                            <span class="label label-info">UI</span></a> <a href="#">
-                            <span class="label label-info">growth</span></a>
-                        </div>
-                    </div>
-                    <div class="row post-content">
-                        <div class="col-md-3">
-                            {% if article.image %}
-                            <img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive">
-                            {% else %}
-                            <img src="/mediafiles/post_images/no-image-available.jpg" class="img-responsive">
-                            {% endif%}
-                        </div>
-                        <div class="col-md-9">
-                            <p>{{ article.content_short | safe |truncatewords:20}}</p>
-                            <p><a class="btn btn-read-more" href='{{ article.get_absolute_url }}'>Read more</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            {% else %}
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Articles not found</h3>
-                </div>
-             </div>
-            {% endif %}
+            {% include 'posts/include/article_list_layout.html'%}
             {% include 'posts/include/pagination_v2.html' %}
         </div>
 
@@ -86,10 +56,10 @@
     offset: 'bottom-in-view',
 
     onBeforePageLoad: function () {
-    $('.spinner-border').show();
+        $('.spinner-border').show();
     },
     onAfterPageLoad: function () {
-    $('.spinner-border').hide();
+        $('.spinner-border').hide();
     }
 
     });
