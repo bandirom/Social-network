@@ -18,4 +18,3 @@ python /home/www/web/manage.py collectstatic
 python /home/www/web/manage.py createsuperuser --email bandirom@ukr.net --username bandirom
 
 exec "$@"
-
