@@ -79,7 +79,7 @@ RUN chown -R 1000:1000 $APP_HOME
 RUN chown -R 1000:1000 /entrypoint.sh
 
 # change to the www user
-USER www
+#USER www
 
 # run entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
