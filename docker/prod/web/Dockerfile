@@ -75,8 +75,8 @@ COPY . $APP_HOME
 COPY ./docker/prod/web/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # chown all the files to the www user
-RUN chown -R www:www $APP_HOME
-RUN chown -R www:www /entrypoint.sh
+RUN chown -R 1000:1000 $APP_HOME
+RUN chown -R 1000:1000 /entrypoint.sh
 
 # change to the www user
 USER www
