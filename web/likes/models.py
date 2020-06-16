@@ -51,4 +51,3 @@ class LikeDislike(models.Model):
 
     def get_dislike(self):
         return reverse('likes:article_dislike', kwargs={'slug': self.slug, "section": self.section})
-

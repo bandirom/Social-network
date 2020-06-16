@@ -144,4 +144,3 @@ class ArticleLikeAPIToggle(APIView):
         }
         return Response(data)
 
-

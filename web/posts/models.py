@@ -85,7 +85,6 @@ class ArticleModel(models.Model):
     def get_api_url(self):
         return api_reverse('articles-api:api-rud', kwargs={'slug': self.slug, "section": self.section})
 
-
     @property
     def owner(self):
         return self.author.username
