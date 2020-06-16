@@ -72,8 +72,8 @@ RUN pip install --no-cache /wheels/*
 COPY . $APP_HOME
 
 # copy entrypoint.sh
-COPY ./docker/prod/web/entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
+COPY ./docker/prod/web/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 # chown all the files to the www user
 RUN chown -R www:www $APP_HOME
 # RUN chown www:www $APP_HOME/media
@@ -83,4 +83,4 @@ RUN chown -R www:www $APP_HOME
 USER www
 
 # run entrypoint.sh
-ENTRYPOINT ["$APP_HOME/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
