@@ -143,4 +143,3 @@ class ArticleLikeAPIToggle(APIView):
             'likecount': like_count,
         }
         return Response(data)
-
