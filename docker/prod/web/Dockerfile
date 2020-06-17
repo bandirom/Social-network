@@ -33,8 +33,8 @@ COPY ./web /usr/src/web/
 RUN flake8 --ignore=E501,F401,F403 .
 
 # install dependencies
-COPY ./web/requirements.prod.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/web/wheels -r requirements.prod.txt
+COPY ./docker/prod/web/requirements.txt  ./requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/web/wheels -r requirements.txt
 
 
 #########
@@ -64,7 +64,7 @@ RUN apk update && apk add libpq postgresql-dev gcc python3-dev musl-dev openssl 
 RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev
 
 COPY --from=builder /usr/src/web/wheels /wheels
-COPY --from=builder /usr/src/web/requirements.prod.txt .
+COPY --from=builder /usr/src/web/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 

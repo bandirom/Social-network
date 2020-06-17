@@ -24,7 +24,7 @@ RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-de
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./web/requirements.txt  ./requirements.txt
+COPY ./docker/dev/web/requirements.txt  ./requirements.txt
 RUN pip install -r requirements.txt
 
 RUN flake8 --ignore=E501,F401,F403 .
