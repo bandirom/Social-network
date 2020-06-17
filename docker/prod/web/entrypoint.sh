@@ -15,6 +15,5 @@ fi
 python /home/www/web/manage.py makemigrations
 python /home/www/web/manage.py migrate
 python /home/www/web/manage.py collectstatic
-python /home/www/web/manage.py createsuperuser --email bandirom@ukr.net --username bandirom
 
 exec "$@"
