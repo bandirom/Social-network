@@ -68,20 +68,22 @@ COPY --from=builder /usr/src/web/requirements.prod.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
+# copy entrypoint.sh
 COPY ./docker/prod/web/entrypoint.sh /
+
 # copy project
 COPY . $APP_HOME
 
-# copy entrypoint.sh
-
-#RUN chmod +x /entrypoint.sh
 # chown all the files to the www user
 RUN chown -R www:www $APP_HOME
+
 RUN chown -R www:www /entrypoint.sh
 #RUN chmod -cR u+rwX $APP_HOME
 
+RUN chmod +x /entrypoint.sh
+
 ## change to the www user
 USER www
-#
+
 ## run entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
