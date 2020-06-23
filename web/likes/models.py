@@ -27,6 +27,15 @@ class LikeDislikeManager(models.Manager):
     def comments(self):
         return self.get_queryset().filter(content_type__model='comment').order_by('-comments__timestamp')
 
+    def is_liked(self):
+        return self.get_query_list(self.likes())
+
+    def is_disliked(self):
+        return self.get_query_list(self.dislikes())
+
+    def get_query_list(self, query):
+        return [item.user for item in query]
+
 
 class LikeDislike(models.Model):
     LIKE = 1

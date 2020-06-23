@@ -4,11 +4,10 @@
 
 {% block head %}
 <script src="https://kit.fontawesome.com/fe539a9d82.js" crossorigin="anonymous"></script>
-<script src="{% static 'likes/js/likes.js' %}"></script>
 {% endblock %}
 
 {% block jquery %}
-    $.getScript('{% static 'posts/js/likes.js' %}');
+    $.getScript('{% static 'likes/js/likes.js' %}');
 {% endblock %}
 
 {% block content %}
@@ -28,22 +27,8 @@
                 <a href=""><span class="badge badge-info">CSS</span></a>
                 <a href=""><span class="badge badge-info">HTML</span></a>
             </p>
-            <p>
-                {% include 'posts/include/like_style.html'%}
-                <a class="like-btn" data-href="{{ article.get_api_like_url }}" href="{{ article.get_like_url }}">
-                    {% include 'posts/include/like_count.html'%}
-                </a>
-            </p>
-            <ul>
-                <li data-slug="{{ article.slug }}" data-href="{{ article.get_like }}" data-type="article"  data-csrf="{{ csrf_token }}" data-action="like" title="Нравится">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
-                    <span data-count="like">{{ article.votes.likes.count }}</span>
-                </li>
-                <li data-slug="{{ article.slug }}" data-type="article"  data-csrf="{{ csrf_token }}" data-href="{{ article.get_dislike }}" data-action="dislike" title="Не нравится">
-                    <span class="glyphicon glyphicon-thumbs-down"></span>
-                    <span data-count="dislike">{{ article.votes.dislikes.count }}</span>
-                </li>
-            </ul>
+                {% include 'posts/include/likes_module.html' %}
+
             <hr><img src="{{ article.image.url }}"  width="500" height="500" class="img-responsive"><hr>
             <div class="post__description post__item">
                 <p>  {{ article.content_full | safe}}</p>
@@ -66,4 +51,14 @@
         <span data-count="dislike">{{ article.votes.dislikes.count }}</span>
     </li>
 </ul>
+{% endblock %}
+
+
+{% block comments %}
+    <p>
+        {% include 'posts/include/like_style.html'%}
+        <a class="like-btn" data-href="{{ article.get_api_like_url }}" href="{{ article.get_like_url }}">
+            {% include 'posts/include/like_count.html'%}
+        </a>
+    </p>
 {% endblock %}

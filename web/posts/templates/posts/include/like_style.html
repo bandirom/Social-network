@@ -1,5 +1,6 @@
-{% if user in article.likes.all %}
-<i name="like_" class="fas fa-heart"></i>
+{% if user in article.votes.is_liked %}
+    <i id="like" class="fas fa-thumbs-up"></i>
 {% else %}
-<i name="like" class="far fa-heart"></i>
-{% endif%}
+    <i id="like" class="far fa-thumbs-up"></i>
+{% endif %}
+<span data-count="like">{{ article.votes.likes.count }}</span>

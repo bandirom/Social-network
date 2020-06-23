@@ -1,0 +1,6 @@
+{% if user in article.votes.is_disliked %}
+    <i id="dislike" class="fas fa-thumbs-down"></i>
+{% else %}
+    <i id="dislike" class="far fa-thumbs-down"></i>
+{% endif %}
+<span data-count="dislike">{{ article.votes.dislikes.count }}</span>

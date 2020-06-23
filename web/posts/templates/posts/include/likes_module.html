@@ -1,0 +1,10 @@
+<div>
+    <ul>
+        <li data-slug="{{ article.slug }}" data-href="{{ article.get_like }}" data-type="article" data-action="like" title="Нравится">
+            {% include 'posts/include/like_style.html' %}
+        </li>
+        <li data-slug="{{ article.slug }}" data-href="{{ article.get_dislike }}" data-type="article" data-action="dislike" title="Не нравится">
+            {% include 'posts/include/dislike_style.html' %}
+        </li>
+    </ul>
+</div>

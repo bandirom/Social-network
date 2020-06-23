@@ -16,8 +16,9 @@
                     <span class="glyphicon glyphicon-user"></span>by <a href="{% url 'main:user-profile' article.author %}">{{ article.author}}</a> |
                     <i class="fa fa-calendar"></i> {{ article.timestamp }} |
                     <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comment_set.count }} Comments</a> |
+
                     {% include 'posts/include/like_style.html'%}
-                    {% include 'posts/include/like_count.html'%}|
+                    {% include 'posts/include/dislike_style.html'%} |
                     <i class="icon-share"></i><a href="#">39 Shares</a> |
                     Section: <a href="{{ article.section.url}}">{{ article.section}}</a> |
                     <span class="glyphicon glyphicon-tags"></span>Tags : <a href="#">
