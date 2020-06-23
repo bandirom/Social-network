@@ -19,8 +19,6 @@ def custom_handler500(request):
     return response
 
 
-
-
 def index(request):
     return render(request, 'app/index.html', {})
 

@@ -40,5 +40,4 @@ class VotesView(APIView):
             "dislike_count": obj.votes.dislikes().count(),
             "sum_rating": obj.votes.sum_rating()
         }
-        # return HttpResponse(json.dumps(data), content_type="application/json")
         return Response(data, content_type="application/json")
