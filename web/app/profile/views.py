@@ -30,10 +30,6 @@ def image_upload_ajax(request, user):
             return JsonResponse({'error': True, 'errors': form.errors})
 
 
-def headline(text, /, border="♦", *, width=50):
-    return f" {text} ".center(width, border)
-
-
 class ProfileView(View):
     template_name = 'app/profile.html'
     context_object_name = 'profile'
