@@ -14,9 +14,9 @@ class ProfileForm(forms.ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields['phone_number'].widget.attrs.update({
             'class': 'form-control',
-            'value': "Profile.get_phone_number",
+            'value': Profile.get_phone_number,
         })
-        self.fields['phone_number'].widget.attrs['placeholder'] = '1111111111' or self.fields['phone_number'].label
+        self.fields['phone_number'].widget.attrs['placeholder'] = '(xxx)xxx-xxxx' or self.fields['phone_number'].label
         self.fields['gender'].widget.attrs.update({
             'class': 'form-control'
         })
@@ -24,6 +24,11 @@ class ProfileForm(forms.ModelForm):
             'class': 'form-control',
             'rows': 2,
         })
+
+        # print("Loop:")
+        # for data, value in self.fields.items():
+        #     print(dir(data), ":", dir(value))
+            # value.widget.attrs['placeholder'] = value.help_text
 
 
 class ChangePassForm(ChangePasswordForm):
@@ -44,6 +49,17 @@ class ImageFileUploadForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('image',)
+
+
+class WebSiteForm(forms.Form):
+    web_site = forms.URLField(label='',
+                              widget=forms.TextInput(
+                                  attrs={"placeholder": "Your site",
+                                         "class": 'form-control url_field'},))
+
+    class Meta:
+        model = Profile
+        fields = ('website')
 
 
 class SignupForm(forms.ModelForm):
