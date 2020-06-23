@@ -28,7 +28,7 @@ class ProfileForm(forms.ModelForm):
         # print("Loop:")
         # for data, value in self.fields.items():
         #     print(dir(data), ":", dir(value))
-            # value.widget.attrs['placeholder'] = value.help_text
+        #     value.widget.attrs['placeholder'] = value.help_text
 
 
 class ChangePassForm(ChangePasswordForm):

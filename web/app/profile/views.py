@@ -64,5 +64,3 @@ class ProfileView(View):
 def user_profile(request, user):
     profile = get_object_or_404(Profile, user=user)
     return render(request, 'app/profile.html', {'profile': profile})
-
-

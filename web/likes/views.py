@@ -33,13 +33,12 @@ class VotesView(APIView):
             result = True
 
         data = {
-                "is_liked": True if request.user in obj.votes.is_liked() else False,
-                "is_disliked": True if request.user in obj.votes.is_disliked() else False,
-                "result": result,
-                "like_count": obj.votes.likes().count(),
-                "dislike_count": obj.votes.dislikes().count(),
-                "sum_rating": obj.votes.sum_rating()
-            }
+            "is_liked": True if request.user in obj.votes.is_liked() else False,
+            "is_disliked": True if request.user in obj.votes.is_disliked() else False,
+            "result": result,
+            "like_count": obj.votes.likes().count(),
+            "dislike_count": obj.votes.dislikes().count(),
+            "sum_rating": obj.votes.sum_rating()
+        }
         # return HttpResponse(json.dumps(data), content_type="application/json")
         return Response(data, content_type="application/json")
-
