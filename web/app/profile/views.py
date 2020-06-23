@@ -3,8 +3,20 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from .forms import ImageFileUploadForm, ChangePassForm, ProfileForm
+from .forms import ImageFileUploadForm, ChangePassForm, ProfileForm, WebSiteForm
 from .models import Profile
+
+
+def user_site(request, user):
+
+    if request.method == 'POST':
+        user = request.POST.get("user")
+        web_url = request.POST.get("web_url")
+        profile = get_object_or_404(Profile, user=request.user)
+        print(user, web_url)
+        profile.website = web_url
+        profile.save()
+        return JsonResponse({'error': False, 'message': 'Uploaded Successfully', 'website': web_url})
 
 
 def image_upload_ajax(request, user):
@@ -27,16 +39,19 @@ class ProfileView(View):
     context_object_name = 'profile'
 
     def get(self, request, user=None, *args, **kwargs):
-        # headline("request", "=")
-        # print(request)
+
         profile = get_object_or_404(User, username=user)
         upload_image_form = ImageFileUploadForm()
         change_password = ChangePassForm()
-        profile_form = ProfileForm()
+        profile_form = ProfileForm(instance=profile)
+        # print(dir(profile_form.data.dict()))
+
+        web_site_form = WebSiteForm()
         return render(request, 'account/profile.html', {'user_profile': profile,
                                                         'upload_image_form': upload_image_form,
                                                         'change_password': change_password,
                                                         'profile_form': profile_form,
+                                                        'web_site_form': web_site_form,
                                                         })
 
     # def post(self, request, user=None, *args, **kwargs):
@@ -49,3 +64,5 @@ class ProfileView(View):
 def user_profile(request, user):
     profile = get_object_or_404(Profile, user=user)
     return render(request, 'app/profile.html', {'profile': profile})
+
+

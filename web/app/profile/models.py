@@ -33,7 +33,7 @@ class Profile(models.Model):
     # nationality = models.CharField(max_length=2, choices=COUNTRIES)
     gender = models.CharField(max_length=1, blank=True, null=True, choices=ProfileManager.GENDER_CHOICES)
     image = models.ImageField(default='profile/default.jpg', upload_to=profile_upload_path)
-    website = models.URLField(default='')
+    website = models.URLField(default='', blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits "
                                          "allowed.")

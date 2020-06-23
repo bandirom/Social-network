@@ -53,6 +53,13 @@
 </div><!--/row-->
 {% endblock %}
 
+{% block scripts %}
+<script>
+    var user = "{{ user }}"
+    var website = "{{ user_profile.profile.website }}"
+</script>
+{% endblock %}
+
 {% block jquery %}
     $.getScript('{% static 'app/scripts/profile.js' %}');
 {% endblock %}
